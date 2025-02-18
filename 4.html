@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guess the image</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="4.css">
+</head>
+<body>
+    <header>
+        <img src="PictureG2.png">
+    </header>
+    
+    <main>
+        <div class="buttons_strip">
+            <a href="index.html">
+                <button class="button button1">
+                    <img class="icons" src="home.png">
+
+                </button>
+            </a>
+
+            <a href="4.html">
+
+                <button class="button button2">
+                    <img class="icons" src="reload.png">
+
+                </button>
+            </a>
+
+            <a href="mail.html">
+
+                <button class="button button3">
+                    <img class="icons" src="mail.png">
+
+                </button>
+            </a>
+        </div>
+        <div class="quiz-container">
+            <h2>Answer the questions to reveal the image!</h2>
+
+            <div class="quiz-image-container">
+                <div id="imageContainer">
+                    <img id="quizImage" src="" alt="Quiz Image">
+                </div>
+                <div id="imageBlocks"></div>
+            </div>
+
+
+            <p id="questionText"></p>
+            <input type="text" id="answerInput" placeholder="Your answer...">
+            <button onclick="checkAnswer()">Submit Answer</button>
+            <p id="resultMessage"></p>
+        </div>
+
+        <div id="finalQuestionContainer" class="hidden">
+            <p id="finalQuestionText">What is on the image?</p>
+            <input type="text" id="finalAnswerInput" placeholder="Guess the image...">
+            <button onclick="checkFinalAnswer()">Submit Guess</button>
+            <p id="finalResultMessage"></p>
+        </div>
+    </main>
+    <script src="4_script.js"></script>
+
+
+    <footer>
+        <p>&copy; -2025-</p>
+    </footer>
+    <script src="4_script.js"></script>
+</body>
+</html>

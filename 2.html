@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="2.css">
+</head>
+<body>
+    <header>
+        <img src="Puzzle2.png">
+    </header>
+    
+    <main>
+
+        <div class="buttons_strip">
+            <a href="index.html">
+                <button class="button button1">
+                    <img class="icons" src="home.png">
+
+                </button>
+            </a>
+
+            <a href="2.html">
+
+                <button class="button button2">
+                    <img class="icons" src="reload.png">
+
+                </button>
+            </a>
+
+            <a href="mail.html">
+
+                <button class="button button3">
+                    <img class="icons" src="mail.png">
+
+                </button>
+            </a>
+        </div>
+
+    <div class="puzzle-container">
+        <div id="puzzle-board"></div>
+        <div id="puzzle-pieces"></div>
+    </div>
+
+    <script src="2_script.js"></script>     
+
+    <!-- Show Image Button -->
+        <div class="action-buttons">
+            <button id="showImageButton">Show Image</button>
+            <button id="reset">Reset</button>
+             <button id="changeImageButton">Change Image</button>
+        </div>
+        <div id="imageGalleryContainer" style="display: none;">
+            <div id="imageGallery" class="scrollable-gallery"></div>
+        </div>
+
+        <!-- Modal to display full image -->
+        <div id="imageModal" class="modal">
+            <span class="close">&times;</span>
+            <img src="2_Madaba.jpg" alt="Full Puzzle Image" id="fullImage">
+        </div>
+    </main>
+ 
+    <footer>
+        <p>&copy; -2025- Do you like puzzles?</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What would you do?</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="3.css">
+</head>
+<body>
+    <header>
+        <img src="WWYD2.png">
+    </header>
+    
+    <main>
+
+        
+        <div class="buttons_strip">
+            <a href="index.html">
+                <button class="button button1">
+                    <img class="icons" src="home.png">
+
+                </button>
+            </a>
+
+            <a href="3.html">
+
+                <button class="button button2">
+                    <img class="icons" src="reload.png">
+
+                </button>
+            </a>
+
+            <a href="mail.html">
+
+                <button class="button button3">
+                    <img class="icons" src="mail.png">
+
+                </button>
+            </a>
+        </div>
+
+
+        <h2>What Would You Do?</h2>
+        <div id="setup">
+            <label for="questionCount">How many questions?</label>
+            <input type="number" id="questionCount" min="1" max="50" value="10">
+            <button id="start-btn">Start</button>
+        </div>
+        
+        <div id="game-container" style="display:none;">
+            <p id="situation-text"></p>
+            <div id="choices"></div>
+            <button id="next-btn" disabled>Next</button>
+        </div>
+        
+        <div id="result" style="display:none;"></div>
+    </main>
+    <script src="3_script.js"></script>
+    <footer>
+        <p>&copy; -2025-</p>
+    </footer>
+</body>
+</html>

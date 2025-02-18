@@ -1,0 +1,50 @@
+.gift-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f4f4f4;
+}
+
+.gift-box {
+    width: 600px;
+    height: 400px;
+    background: #d9534f;
+    position: relative;
+    cursor: pointer;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: white;
+    font-size: 1.5em;
+    text-align: center;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.gift-cover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #c9302c;
+    border-radius: 10px;
+    transition: transform 1s ease-in-out, opacity 1s ease-in-out;
+}
+
+#gift-image {
+    display: none; /* Hidden by default */
+    width: 600px;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
