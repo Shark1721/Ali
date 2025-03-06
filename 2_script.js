@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
         "Screenshot_20241221-110229_Minecraft.jpg",
         "Messenger_creation_B57FDA2A-CB4C-41E2-98BB-7841233C13FE.jpeg",
         "Screenshot_20240901-070511_Instagram.jpg",
-        "2Screenshot_20240726-172141_Instagram.jpg",
+        "Screenshot_20240726-172141_Instagram.jpg",
         "jordan-flag-free-png.png",
         "Screenshot_20240621-075921_Instagram.jpg",
         "IMG_20240927_184110_240.jpg",
