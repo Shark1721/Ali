@@ -132,7 +132,7 @@ Story is not based on real life events.`
     }
   },
   2: {
-    title: "The Brave Wiwiwi",
+      cover: "bc2.png",
     chapters: {
       "A Wiwiwi": `What is a Wiwiwi, you may ask? Well, a Wiwiwi is a kitten, no, rather a big kitty, and she is very cute. She likes to eep and eat, but sometimes she likes to run very fast across the room.
 
@@ -182,7 +182,7 @@ So now Wiwiwi had a friend. They played often, ate together and ept together and
     }
   },
   3: {
-    title: "A freaky story",
+    cover: "bc3.png",
     chapters: {
       "Freaky story": `
       ‎
@@ -342,7 +342,6 @@ Fred`
     }
   }
 };
-
 const bookSelection = document.getElementById("book-selection");
 const bookReader = document.getElementById("book-reader");
 const bookContainer = document.getElementById("book");
@@ -352,6 +351,30 @@ const backBtn = document.getElementById("backToSelection");
 
 let currentPage = 0;
 let pages = [];
+
+
+function paginateText(text, maxCharsPerPage = 1000) {
+  const paragraphs = text.split(/\n+/).map(p => p.trim()).filter(p => p);
+  const pages = [];
+  let buffer = "";
+
+  paragraphs.forEach((paragraph, i) => {
+    const wrappedParagraph = `<p>${paragraph}</p>`;
+    
+    if ((buffer + wrappedParagraph).length > maxCharsPerPage) {
+      pages.push(buffer);
+      buffer = wrappedParagraph;
+    } else {
+      buffer += wrappedParagraph;
+    }
+  });
+
+  if (buffer.trim()) {
+    pages.push(buffer);
+  }
+
+  return pages;
+}
 
 document.querySelectorAll(".book-thumbnail").forEach((thumbnail) => {
   thumbnail.addEventListener("click", () => {
@@ -364,27 +387,38 @@ function loadBook(bookId) {
   const book = books[bookId];
   pages = [];
 
-  // Cover Page
-pages.push(`
-  <div class='cover'>
-    <img src="${book.cover}" alt="${book.title} Cover" class="cover-image" />
-  </div>
-`);
+  // Cover page
+  pages.push(`
+    <div class="first-page">
+      <img src="${book.cover}" alt="${book.title} Cover" class="cover-image" />
+    </div>
+  `);
 
-
-  // TOC Page
+  // Table of Contents
   let tocHtml = "<div class='toc'><h3>Table of Contents</h3>";
-  Object.keys(book.chapters).forEach((chapter, index) => {
-    tocHtml += `<a onclick="goToChapter(${index + 2})">${chapter}</a>`;
+  const tocLinks = [];
+  let chapterStartIndex = pages.length + 1;
+
+  Object.entries(book.chapters).forEach(([title, text]) => {
+    const chapterPages = paginateText(text);
+    tocLinks.push({ title, index: chapterStartIndex });
+    chapterStartIndex += chapterPages.length;
+  });
+
+  tocLinks.forEach(({ title, index }) => {
+    tocHtml += `<div><a href="javascript:void(0);" onclick="goToChapter(${index})">${title}</a></div>`;
   });
   tocHtml += "</div>";
   pages.push(tocHtml);
 
-Object.entries(book.chapters).forEach(([title, text]) => {
-  // Ensure paragraphs are correctly formatted
-  let formattedText = text.replace(/\n/g, '</p><p>'); // Converts newlines into paragraph tags
-  pages.push(`<h2>${title}</h2><p>${formattedText}</p>`);
-});
+  // Chapters split by pages
+  Object.entries(book.chapters).forEach(([title, text]) => {
+    const chapterPages = paginateText(text);
+    chapterPages.forEach((content, i) => {
+      const pageTitle = chapterPages.length > 1 ? `${title}` : title;
+      pages.push(`<h2>${pageTitle}</h2>${content}`);
+    });
+  });
 
   renderPages();
   bookSelection.style.display = "none";
@@ -393,15 +427,23 @@ Object.entries(book.chapters).forEach(([title, text]) => {
 
 function renderPages() {
   bookContainer.innerHTML = pages
-    .map((content, i) => `<div class='page${i === 0 ? " show" : ""}' id='page-${i}'>${content}</div>`)
+    .map((content, i) => `<div class="page ${i === 0 ? "show" : ""}" id="page-${i}">${content}</div>`)
     .join("");
   currentPage = 0;
 }
 
 function showPage(index) {
   if (index >= 0 && index < pages.length) {
-    document.querySelectorAll(".page").forEach((p) => p.classList.remove("show"));
-    document.getElementById(`page-${index}`).classList.add("show");
+    const currentPageElement = document.getElementById(`page-${currentPage}`);
+    const nextPageElement = document.getElementById(`page-${index}`);
+
+    // Apply the hide class to the current page and show to the next page
+    currentPageElement.classList.remove("show");
+    currentPageElement.classList.add("hide");
+
+    nextPageElement.classList.remove("hide");
+    nextPageElement.classList.add("show");
+
     currentPage = index;
   }
 }
