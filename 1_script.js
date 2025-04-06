@@ -353,7 +353,7 @@ let currentPage = 0;
 let pages = [];
 
 
-function paginateText(text, maxCharsPerPage = 1000) {
+function paginateText(text, maxCharsPerPage = 800) {
   const paragraphs = text.split(/\n+/).map(p => p.trim()).filter(p => p);
   const pages = [];
   let buffer = "";
