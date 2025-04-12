@@ -13,62 +13,35 @@
         <img src="A_story_for_Ali.png">
     </header>
     
-    <main>
-        <!-- Your existing buttons -->
-           <div class="buttons_strip">
-                <a href="index.html">
-                    <button class="button button1">
-                        <img class="icons" src="home.png">
+  <main>
+    <!-- Buttons -->
+    <div class="buttons_strip">
+      <a href="index.html"><button class="button button1"><img class="icons" src="home.png"></button></a>
+      <a href="1.html"><button class="button button2"><img class="icons" src="reload.png"></button></a>
+      <a href="mail.html"><button class="button button3"><img class="icons" src="mail.png"></button></a>
+    </div>
 
-                    </button>
-                </a>
+    <!-- Book Selection -->
+    <div id="book-selection" class="book-selection">
+      <div class="book-thumbnail" data-book="1"><img src="bc1.png" alt="Book 1 Thumbnail"></div>
+      <div class="book-thumbnail" data-book="2"><img src="bc2.png" alt="Book 2 Thumbnail"></div>
+      <div class="book-thumbnail" data-book="3"><img src="bc3.png" alt="Book 3 Thumbnail"></div>
+    </div>
 
-                <a href="1.html">
+    <!-- Book Reader -->
+    <div id="book-reader" class="book-reader">
+      <div class="book-container" id="book"></div>
+      <div class="book-controls">
+        <button id="prevPage">← Previous</button>
+        <button id="nextPage">Next →</button>
+        <button id="backToSelection">Back to Books</button>
+      </div>
+    </div>
+  </main>
 
-                    <button class="button button2">
-                        <img class="icons" src="reload.png">
-
-                    </button>
-                </a>
-
-                <a href="mail.html">
-
-                    <button class="button button3">
-                        <img class="icons" src="mail.png">
-
-                    </button>
-                </a>
-            </div>
-        <div id="book-selection" class="book-selection">
-            <div class="book-thumbnail" data-book="1">
-                <img src="bc1.png" alt="Book 1 Thumbnail">
-            </div>
-            <div class="book-thumbnail" data-book="2">
-                <img src="bc2.png" alt="Book 2 Thumbnail">
-            </div>
-            <div class="book-thumbnail" data-book="3">
-                <img src="bc3.png" alt="Book 3 Thumbnail">
-            </div>
-        </div>
-
-        <!-- Book Reader -->
-        <div id="book-reader" class="book-reader">
-            <div class="book-container">
-                <div class="book" id="book"></div>
-            </div>
-            <div class="book-controls">
-                <button id="prevPage">← Previous</button>
-                <button id="nextPage">Next →</button>
-                <button id="backToSelection">Back to Books</button>
-            </div>
-        </div>
-    </main>
-
-    <footer>
-        <p>&copy; -2025- If you see this you are a Sigma.</p>
-    </footer>
-
-    <script src="1_script.js"></script>
-
+  <footer>
+    <p>&copy; -2025- If you see this you are a Sigma.</p>
+  </footer>
+  <script src="1_script.js"></script>
 </body>
 </html>
