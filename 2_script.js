@@ -9,25 +9,25 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeModal = document.querySelector(".close");
     const imageGalleryContainer = document.getElementById("imageGalleryContainer");
     const imageGallery = document.getElementById("imageGallery");
+    const congratsMessage = document.getElementById("congratsMessage");
 
     let imageLinks = [
-        "Amman.avif",  // Add your image links here
-        "Madaba.jpg",    // Example image 2
-        "Blossom.jpeg",
-        "thumb-1920-684763.jpg",
-        "Untitled240_20240814235224.png",
-        "stardew-valley-map-of-valley.jpg",
-        "Screenshot_20241221-110229_Minecraft.jpg",
-        "Messenger_creation_B57FDA2A-CB4C-41E2-98BB-7841233C13FE.jpeg",
-        "Screenshot_20240901-070511_Instagram.jpg",
-        "Screenshot_20240726-172141_Instagram.jpg",
-        "jordan-flag-free-png.png",
-        "Screenshot_20240621-075921_Instagram.jpg",
-        "IMG_20240927_184110_240.jpg",
-        "20240819_195955.jpg",
-        "81qkuWjKj6L.jpg"
-
-
+        "images/Amman.avif",
+        "images/Madaba.jpg",
+        "images/Blossom.jpeg",
+        "images/thumb-1920-684763.jpg",
+        "images/Untitled240_20240814235224.png",
+        "images/stardew-valley-map-of-valley.jpg",
+        "images/Screenshot_20241221-110229_Minecraft.jpg",
+        "images/Messenger_creation_B57FDA2A-CB4C-41E2-98BB-7841233C13FE.jpeg",
+        "images/Screenshot_20240901-070511_Instagram.jpg",
+        "images/Screenshot_20240726-172141_Instagram.jpg",
+        "images/jordan-flag-free-png.png",
+        "images/Screenshot_20240621-075921_Instagram.jpg",
+        "images/IMG_20240927_184110_240.jpg",
+        "images/20240819_195955.jpg",
+        "images/81qkuWjKj6L.jpg",
+        "images/B - 2 Spirit.jpg"
     ];
 
     let currentImageIndex = 0;
@@ -44,33 +44,24 @@ document.addEventListener("DOMContentLoaded", function () {
         imageModal.style.display = "none";
     });
 
-    // Change image functionality (shows image gallery)
     changeImageButton.addEventListener("click", () => {
-        // Show the gallery container
         imageGalleryContainer.style.display = "block";
-
-        // Clear any existing images in the gallery
         imageGallery.innerHTML = "";
-
-        // Display all available images as clickable thumbnails
         imageLinks.forEach((imgSrc) => {
             const imgElement = document.createElement("img");
             imgElement.src = imgSrc;
             imgElement.alt = "Puzzle Image";
             imgElement.classList.add("gallery-thumbnail");
-
             imgElement.addEventListener("click", () => {
                 imageSrc = imgSrc;
                 loadImage(imageSrc);
                 fullImage.src = imgSrc;
-                imageModal.style.display = "block";  // Show modal for the selected image
-                imageGalleryContainer.style.display = "none"; // Hide gallery after selection
+                imageModal.style.display = "block";
+                imageGalleryContainer.style.display = "none";
             });
-
             imageGallery.appendChild(imgElement);
         });
     });
-
 
     resetButton.addEventListener("click", () => {
         loadImage(imageSrc);
@@ -89,11 +80,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             let aspectRatio = imgWidth / imgHeight;
             if (aspectRatio > 1) {
-                // Image is wider
                 imgWidth = maxSize;
                 imgHeight = maxSize / aspectRatio;
             } else {
-                // Image is taller or square
                 imgHeight = maxSize;
                 imgWidth = maxSize * aspectRatio;
             }
@@ -116,7 +105,6 @@ document.addEventListener("DOMContentLoaded", function () {
             for (let row = 0; row < rows; row++) {
                 for (let col = 0; col < cols; col++) {
                     const correctIndex = row * cols + col;
-
                     const slot = document.createElement("div");
                     slot.classList.add("piece-slot");
                     slot.dataset.index = correctIndex;
@@ -170,6 +158,22 @@ document.addEventListener("DOMContentLoaded", function () {
             draggedPiece.classList.remove("dragging");
             draggedPiece.classList.add("placed");
             targetSlot.classList.add("placed");
+
+            // Check if puzzle is completed
+            checkCompletion();
+        }
+    }
+
+    function checkCompletion() {
+        const allSlots = document.querySelectorAll(".piece-slot");
+        const allPieces = document.querySelectorAll(".piece.placed");
+
+        if (allSlots.length === allPieces.length) {
+            // Trigger confetti
+            confetti();
+
+            // Show congrats message
+            congratsMessage.style.display = "block";
         }
     }
 });
