@@ -352,31 +352,45 @@ const backBtn = document.getElementById("backToSelection");
 let currentPage = 0;
 let pages = [];
 
+function autoPaginateText(text) {
+  const container = document.createElement("div");
+  container.style.position = "absolute";
+  container.style.visibility = "hidden";
+  container.style.width = "400px";
+  container.style.height = "500px";
+  container.style.padding = "20px";
+  container.style.boxSizing = "border-box";
+  container.style.fontFamily = "Arial, sans-serif";
+  container.style.fontSize = "16px";
+  container.style.lineHeight = "1.5";
+  document.body.appendChild(container);
 
-function paginateText(text, maxCharsPerPage = 800) {
-  const paragraphs = text.split(/\n+/).map(p => p.trim()).filter(p => p);
+  const lines = text.split("\n");
   const pages = [];
-  let buffer = "";
+  let pageText = "";
 
-  paragraphs.forEach((paragraph, i) => {
-    const wrappedParagraph = `<p>${paragraph}</p>`;
-    
-    if ((buffer + wrappedParagraph).length > maxCharsPerPage) {
-      pages.push(buffer);
-      buffer = wrappedParagraph;
-    } else {
-      buffer += wrappedParagraph;
+  lines.forEach((line, i) => {
+    pageText += `<p>${line}</p>`;
+    container.innerHTML = pageText;
+
+    if (container.scrollHeight > container.clientHeight) {
+      // Remove last paragraph, push page, start new
+      const lastBreak = pageText.lastIndexOf("<p>");
+      const finishedPage = pageText.slice(0, lastBreak);
+      pages.push(finishedPage);
+      pageText = `<p>${line}</p>`;
     }
   });
 
-  if (buffer.trim()) {
-    pages.push(buffer);
+  if (pageText.trim()) {
+    pages.push(pageText);
   }
 
+  document.body.removeChild(container);
   return pages;
 }
 
-document.querySelectorAll(".book-thumbnail").forEach((thumbnail) => {
+document.querySelectorAll(".book-thumbnail").forEach(thumbnail => {
   thumbnail.addEventListener("click", () => {
     const bookId = thumbnail.getAttribute("data-book");
     loadBook(bookId);
@@ -388,35 +402,31 @@ function loadBook(bookId) {
   pages = [];
 
   // Cover page
-  pages.push(`
-    <div class="first-page">
-      <img src="${book.cover}" alt="${book.title} Cover" class="cover-image" />
-    </div>
-  `);
+  pages.push(`<div class="first-page"><img src="${book.cover}" class="cover-image" alt="Cover" /></div>`);
 
   // Table of Contents
-  let tocHtml = "<div class='toc'><h3>Table of Contents</h3>";
-  const tocLinks = [];
-  let chapterStartIndex = pages.length + 1;
+  let tocHtml = `<div class='toc'><h3>Table of Contents</h3>`;
+  let chapterLinks = [];
+  let startIndex = 2;
 
   Object.entries(book.chapters).forEach(([title, text]) => {
-    const chapterPages = paginateText(text);
-    tocLinks.push({ title, index: chapterStartIndex });
-    chapterStartIndex += chapterPages.length;
+    const chapterPages = autoPaginateText(text);
+    chapterLinks.push({ title, index: startIndex });
+    startIndex += chapterPages.length;
   });
 
-  tocLinks.forEach(({ title, index }) => {
+  chapterLinks.forEach(({ title, index }) => {
     tocHtml += `<div><a href="javascript:void(0);" onclick="goToChapter(${index})">${title}</a></div>`;
   });
   tocHtml += "</div>";
   pages.push(tocHtml);
 
-  // Chapters split by pages
+  // Chapters
   Object.entries(book.chapters).forEach(([title, text]) => {
-    const chapterPages = paginateText(text);
+    const chapterPages = autoPaginateText(text);
     chapterPages.forEach((content, i) => {
-      const pageTitle = chapterPages.length > 1 ? `${title}` : title;
-      pages.push(`<h2>${pageTitle}</h2>${content}`);
+      const prefix = i === 0 ? `<h2>${title}</h2>` : "";
+      pages.push(`${prefix}${content}`);
     });
   });
 
@@ -426,40 +436,42 @@ function loadBook(bookId) {
 }
 
 function renderPages() {
-  bookContainer.innerHTML = pages
-    .map((content, i) => `<div class="page ${i === 0 ? "show" : ""}" id="page-${i}">${content}</div>`)
-    .join("");
+  bookContainer.innerHTML = pages.map((content, i) =>
+    `<div class="page ${i === 0 ? 'cover-page' : ''}" id="page-${i}" style="z-index: ${pages.length - i};">${content}</div>`
+  ).join("");
   currentPage = 0;
 }
 
+
 function showPage(index) {
-  if (index >= 0 && index < pages.length) {
-    const currentPageElement = document.getElementById(`page-${currentPage}`);
-    const nextPageElement = document.getElementById(`page-${index}`);
+  if (index < 0 || index >= pages.length) return;
 
-    // Apply the hide class to the current page and show to the next page
-    currentPageElement.classList.remove("show");
-    currentPageElement.classList.add("hide");
-
-    nextPageElement.classList.remove("hide");
-    nextPageElement.classList.add("show");
-
-    currentPage = index;
+  // Flip pages forward
+  for (let i = 0; i < pages.length; i++) {
+    const page = document.getElementById(`page-${i}`);
+    if (i < index) {
+      page.classList.add("flipped");
+      page.classList.remove("active");
+    } else if (i === index) {
+      page.classList.remove("flipped");
+      page.classList.add("active");
+    } else {
+      page.classList.remove("flipped");
+      page.classList.remove("active");
+    }
   }
+
+  currentPage = index;
 }
+
+
 
 function goToChapter(index) {
   showPage(index);
 }
 
-prevBtn.onclick = () => {
-  if (currentPage > 0) showPage(currentPage - 1);
-};
-
-nextBtn.onclick = () => {
-  if (currentPage < pages.length - 1) showPage(currentPage + 1);
-};
-
+prevBtn.onclick = () => showPage(currentPage - 1);
+nextBtn.onclick = () => showPage(currentPage + 1);
 backBtn.onclick = () => {
   bookReader.style.display = "none";
   bookSelection.style.display = "flex";
