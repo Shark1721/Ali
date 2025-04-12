@@ -1,14 +1,23 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background-color: #f4f4f4;
-}
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: none;
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: #FF5733;
+    animation: fall 3s infinite ease-in;
+    opacity: 0.8;
+    border-radius: 50%;
 }
 
+@keyframes fall {
+    0% {
+        transform: translateY(-100px) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+    }
+}
 
 
 /* Puzzle Container */
@@ -91,19 +100,7 @@ body {
     cursor: pointer;
 }
 
-/* Buttons */
-button {
-    padding: 10px 15px;
-    background-color: #db75fa;
-    color: black;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-}
 
-button:hover {
-    background-color: #ab58c4;
-}
 
 /* Action Buttons Row */
 .action-buttons {
@@ -111,6 +108,17 @@ button:hover {
     justify-content: center;
     gap: 10px;
     margin-top: 20px;
+
+}
+.ab {
+    background-color: #f8d5eb;
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.ab:hover {
+    background-color: #d5a2c2;
 }
 
 #imageGalleryContainer {
