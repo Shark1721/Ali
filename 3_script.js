@@ -3,7 +3,7 @@ const situations = [
         { text: "Take it home and care for it.", awesome: 10, evil: 0 },
         { text: "Ignore it and walk away.", awesome: 2, evil: 2 },
         { text: "Find its owner.", awesome: 8, evil: 0 },
-        { text: "Adopt it as your own.", awesome: 9, evil: 0 },
+        { text: "Take it to the shelter.", awesome: 9, evil: 0 },
         { text: "Give it food and leave it.", awesome: 6, evil: 0 }
     ] },
     { text: "Your friend is feeling sad.", choices: [
@@ -18,7 +18,7 @@ const situations = [
         { text: "Laugh at them.", awesome: 2, evil: 8 },
         { text: "Ignore them.", awesome: 1, evil: 1 },
         { text: "Offer to help them search.", awesome: 8, evil: 0 },
-        { text: "Tell them to keep trying.", awesome: 6, evil: 2 }
+        { text: "Tell them they are a jew.", awesome: 6, evil: 2 }
     ] },
     { text: "You have to study for an exam.", choices: [
         { text: "Study 2 weeks before.", awesome: 6, evil: 2 },
@@ -35,9 +35,9 @@ const situations = [
         { text: "Admit you don’t understand either.", awesome: 6, evil: 2 }
     ] },
     { text: "What would you do during an apocalypse?", choices: [
-        { text: "Try to survive.", awesome: 7, evil: 2 },
-        { text: "Give up.", awesome: 4, evil: 5 },
-        { text: "Look for a safe place.", awesome: 8, evil: 1 },
+        { text: "Try to survive in your house.", awesome: 7, evil: 2 },
+        { text: "Kys.", awesome: 4, evil: 5 },
+        { text: "Hide in the shopping center.", awesome: 8, evil: 1 },
         { text: "Rescue as many animals as possible.", awesome: 10, evil: 0 },
         { text: "Stay behind and accept fate.", awesome: 0, evil: 10 }
     ] },
@@ -52,32 +52,32 @@ const situations = [
         { text: "Stay hungry.", awesome: 1, evil: 10 },
         { text: "Go and buy some food.", awesome: 10, evil: 0 },
         { text: "Try to find some food at home.", awesome: 4, evil: 6 },
-        { text: "Complain to a friend.", awesome: 2, evil: 5 },
-        { text: "Eat something unusual.", awesome: 8, evil: 2 }
+        { text: "Complain to a friend for no reason.", awesome: 2, evil: 5 },
+        { text: "Eat kitty food.", awesome: 8, evil: 2 }
     ] },
-    { text: "You feel sleepy but had plans with your friends.", choices: [
+    { text: "You feel eepy but had plans with your friends.", choices: [
         { text: "Tell them you are busy.", awesome: 1, evil: 9 },
-        { text: "Fight the sleepiness.", awesome: 10, evil: 0 },
+        { text: "Fight the eepiness.", awesome: 10, evil: 0 },
         { text: "Apologize and reschedule.", awesome: 9, evil: 0 },
-        { text: "Go to sleep without telling them anything.", awesome: 0, evil: 10 },
-        { text: "Tell them you’re sleepy and then sleep.", awesome: 4, evil: 5 }
+        { text: "Go to eep without telling them anything.", awesome: 0, evil: 10 },
+        { text: "Tell them you’re eepy and then eep.", awesome: 4, evil: 5 }
     ] },
     { text: "Your friend has something exciting to tell you later.", choices: [
         { text: "Say 'Who asked?'.", awesome: 0, evil: 10 },
         { text: "Get excited too and listen happily.", awesome: 10, evil: 0 },
         { text: "Forget about it.", awesome: 0, evil: 7 },
         { text: "Listen but not care.", awesome: 2, evil: 8 },
-        { text: "Tell them to be quiet.", awesome: 0, evil: 10 }
+        { text: "Tell them to shut up.", awesome: 0, evil: 10 }
     ] },
     { text: "You can visit one country/city.", choices: [
         { text: "Czech Republic.", awesome: 7, evil: 1 },
-        { text: "Tokyo, Japan.", awesome: 10, evil: 0 },
-        { text: "India.", awesome: 6, evil: 2 },
+        { text: "Mecca.", awesome: 10, evil: 0 },
+        { text: "India.", awesome: 1, evil: 10 },
         { text: "Switzerland.", awesome: 10, evil: 0 },
-        { text: "France.", awesome: 5, evil: 5 }
+        { text: "France.", awesome: 1, evil: 9 }
     ] },
     { text: "You are given an envelope that says Do not open until 2050.", choices: [
-        { text: "Throw away", awesome: 0, evil: 7 },
+        { text: "Throw it away", awesome: 0, evil: 7 },
         { text: "Open immediately ", awesome: 3, evil: 9 },
         { text: "Give it to someone else", awesome: 4, evil: 6 },
         { text: "Wait till 2050", awesome: 10, evil: 0 },
@@ -189,14 +189,13 @@ const situations = [
         { text: "Donate the money", awesome: 5, evil: 8 }
     ] },
     { text: "In a bus, would you sit next to:", choices: [
-        { text: "A friendly person with a pet.", awesome: 10, evil: 0 },
-        { text: "An elderly person.", awesome: 8, evil: 1 },
-        { text: "Someone wearing a cool outfit.", awesome: 6, evil: 2 },
-        { text: "A person who seems a bit loud.", awesome: 3, evil: 5 },
-        { text: "A person who looks very sleepy.", awesome: 7, evil: 3 }
+        { text: "A black person with a kitty.", awesome: 10, evil: 0 },
+        { text: "The autistic kid (you are autistic too).", awesome: 8, evil: 1 },
+        { text: "A white gay person.", awesome: 2, evil: 6 },
+        { text: "A black gay person.", awesome: 2, evil: 7 },
+        { text: "An indian.", awesome: 0, evil: 10 }
     ] }
 ];
-
 
 let numQuestions = 10;
 let selectedSituations = [];
@@ -274,10 +273,73 @@ nextBtn.onclick = () => {
     displayQuestion();
 };
 
-function showResult() {
-    gameContainer.style.display = "none";
-    resultContainer.style.display = "block";
-    resultContainer.innerHTML = `<h2>Results</h2>
-        <p>Awesome Score: ${awesomeScore}</p>
-        <p>Evil Score: ${evilScore}</p>`;
+function getCombinedMessage(awesomePercentage, evilPercentage) {
+    // Calculate the total percentage of both awesome and evil
+    const totalPercentage = awesomePercentage + evilPercentage;
+
+    // Ensure the total adds up to 100%
+    const finalAwesomePercentage = Math.min(awesomePercentage, 100);
+    const finalEvilPercentage = Math.min(evilPercentage, 100);
+
+    // If the combined percentage exceeds 100 due to rounding, adjust it
+    const combinedPercentage = Math.min(finalAwesomePercentage + finalEvilPercentage, 100);
+
+    let message = "";
+
+    // Extreme cases for awesomePercentage
+    if (finalAwesomePercentage >= 100) {
+        message = "You are the awesomest little minanu! Truly, an awesomesauce blossom wiwiwi. A sigma.";
+    } else if (finalAwesomePercentage >= 99) {
+        message = "Almost, still a little minanu!";
+    } else if (finalAwesomePercentage >= 95) {
+        message = "Aaaamazingggg, you are so blossom";
+    } else if (finalAwesomePercentage >= 90) {
+        message = "You are a Minanu";
+    } else if (finalAwesomePercentage >= 80) {
+        message = "You're so skibidi";
+    } else if (finalAwesomePercentage >= 70) {
+        message = "Skibidi, but could be more awesome";
+    } else if (finalAwesomePercentage >= 60) {
+        message = "A sigma would score more awesomeness.";
+    } else if (finalAwesomePercentage >= 50) {
+        message = "You cannot be considered a Minanu.";
+    } else if (finalAwesomePercentage >= 40) {
+        message = "Minanus decide better!";
+    } else if (finalAwesomePercentage >= 30) {
+        message = "Quite naughty, aren't you?";
+    } else if (finalAwesomePercentage >= 20) {
+        message = "You must be an Evil Weewi!";
+    } else if (finalAwesomePercentage >= 10) {
+        message = "Not nice, Minanu would be disappointed.";
+    } else if (finalAwesomePercentage >= 1) {
+        message = "You are not a sigma.";
+    } else {
+        message = "You are an Evil Weevil.";
+    }
+
+    // Return the message
+    return message;
 }
+
+function showResult() {
+    // Calculate percentages for awesome and evil
+    const awesomePercentage = (awesomeScore / (awesomeScore + evilScore)) * 100;
+    const evilPercentage = (evilScore / (awesomeScore + evilScore)) * 100;
+
+    // Ensure percentages add up to 100
+    const finalAwesomePercentage = Math.min(awesomePercentage, 100);
+    const finalEvilPercentage = Math.min(evilPercentage, 100);
+
+    // Generate the message based on the percentages
+    const message = getCombinedMessage(finalAwesomePercentage, finalEvilPercentage);
+
+    // Display the result
+    resultContainer.style.display = "block";
+    resultContainer.innerHTML = `
+        <h2>Results</h2>
+        <p>Awesome Score: ${Math.round(finalAwesomePercentage)}%</p>
+        <p>Evil Score: ${Math.round(finalEvilPercentage)}%</p>
+        <p>${message}</p>
+    `;
+}
+
