@@ -357,7 +357,7 @@ function autoPaginateText(text) {
   container.style.position = "absolute";
   container.style.visibility = "hidden";
   container.style.width = "400px";
-  container.style.height = "500px";
+  container.style.height = "550px";
   container.style.padding = "20px";
   container.style.boxSizing = "border-box";
   container.style.fontFamily = "Arial, sans-serif";
@@ -425,7 +425,7 @@ function loadBook(bookId) {
   Object.entries(book.chapters).forEach(([title, text]) => {
     const chapterPages = autoPaginateText(text);
     chapterPages.forEach((content, i) => {
-      const prefix = i === 0 ? `<h2>${title}</h2>` : "";
+      const prefix = i === 0 ? `<h2>${title}</h2> <hr>` : "";
       pages.push(`${prefix}${content}`);
     });
   });
