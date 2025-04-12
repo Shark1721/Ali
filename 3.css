@@ -7,28 +7,55 @@
     margin: auto;
     text-align: center;
     margin-bottom:200px;
+    font-size: 26px;
 }
 
-button {
+.choice-btn:hover {
+    background: #a5bfdb;
+
+}
+
+.choice-btn {
+    background: #d8ebff;
     margin-top: 10px;
     padding: 10px;
     border: none;
     cursor: pointer;
     border-radius: 5px;
     width: 100%;
-}
-
-.choice-btn {
-    background: lightgray;
+    font-size: 20px;
 }
 
 .choice-btn.selected {
-    background: #dba9fc;
+    background: #90c6ff;
 }
 
 #next-btn {
-    background: #333;
-    color: white;
+    background: #90c6ff;
+    color: black;
+    margin:10px;
+    padding:10px;
+    cursor: pointer;
+    border-radius: 5px;
+    border-width:1px;
+}
+
+#next-btn:hover {
+    background: #5686b9;
+}
+
+#start-btn {
+    background: #90c6ff;
+    color: black;
+    margin:10px;
+    padding:10px;
+    cursor: pointer;
+    border-radius: 5px;
+    border-width:1px;
+}
+
+#start-btn:hover {
+    background: #5686b9;
 }
 
 #result {
@@ -38,5 +65,15 @@ button {
 }
 p {
     color:black;
+
+}
+
+h2 {
+    margin-bottom:10px;
+
+}
+
+footer {
+    margin-top: 150px;
 
 }
