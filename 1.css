@@ -139,3 +139,12 @@
   display: block;
   border-radius: 8px;
 }
+
+h2 {
+  margin-bottom:10px;
+}
+hr {
+  height:3px;
+  background-color: #ba9465;
+  margin-bottom:10px;
+}
